@@ -36,6 +36,7 @@ class NormalParticle
   }
   void show()
   {
+    fill(myColor);
     ellipse((float)myX,(float)myY,10,10);
   }
 }
@@ -51,4 +52,3 @@ class JumboParticle //uses inheritance
 {
   //your code here
 }
-
