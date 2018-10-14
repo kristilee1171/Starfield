@@ -1,4 +1,6 @@
 NormalParticle[]one;
+OddballParticle two;
+JumboParticle three;
 void setup()
 {
   size(500,500);
@@ -7,6 +9,8 @@ void setup()
   {
     one[i] = new NormalParticle();
   }
+  two = new OddballParticle();
+  three = new JumboParticle();
 }
 void draw()
 {
@@ -16,6 +20,10 @@ void draw()
     one[i].move();
     one[i].show();
   }
+  two.show();
+  two.move();
+  three.show();
+  three.move();
 }
 class NormalParticle implements Particle
 {
@@ -27,7 +35,7 @@ class NormalParticle implements Particle
     myY = 200;
     myColor = color(255);
     mySpeed = Math.random()*2;
-    myAngle = Math.random()*(Math.PI*2);
+    myAngle = Math.random()*Math.PI*2;
   }
   public void move()
   {
@@ -37,8 +45,6 @@ class NormalParticle implements Particle
   public void show()
   {
     noStroke();
-    fill(0);
-    ellipse(250,200,75,75);
     fill(myColor);
     ellipse((float)myX,(float)myY,2,2);
     if((float)myX > 500 || (float)myY > 500 || (float)myX < 0 || (float)myY < 0)
@@ -55,17 +61,46 @@ interface Particle
 }
 class OddballParticle implements Particle
 {
-  public void show()
+  int myColor;
+  double myX, myY;
+  OddballParticle()
   {
-    fill(255,0,0);
-    rect(0,0,50,50);
+    myX = 0;
+    myY = 0;
+    myColor = color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
   }
   public void move()
   {
-    
+    if(myX < 600)
+    {
+      myX = myX + 3;
+      myY = myX;
+    }
+    if(myX > 550)
+    {
+      myX = 0;
+      myY = 0;
+      myColor = color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
+    }
+  }
+  public void show()
+  {
+    noStroke();
+    fill(myColor);
+    rect((float)myX,(float)myY,(float)myX+5,(float)myY+5);
   }
 }
-class JumboParticle //uses inheritance
+class JumboParticle extends NormalParticle
 {
-  //your code here
+  public void show()
+  {
+    fill((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
+    ellipse((float)myX,(float)myY,30,30);
+    if((float)myX > 500 || (float)myY > 500 || (float)myX < 0 || (float)myY < 0)
+    {
+      myX = 250;
+      myY = 200;
+      myAngle = Math.random()*Math.PI*2;
+    }
+  }
 }
